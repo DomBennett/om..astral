@@ -1,13 +1,14 @@
 #' @name astral
 #' @title astral
 #' @description Run astral
-#' @param ... Arguments
+#' @param astral_args Arguments for ASTRAL
+#' @param java_args Arguments for java
+#' @details Change memory settings with \code{-Xmx#M} in \code{java_args}.
 #' @example /examples/astral.R
 #' @export
-astral <- function(...) {
-  arglist <- outsider::.arglist_get(...)
-  files_to_send <- outsider::.filestosend_get(arglist = arglist)
-  arglist <- c('-jar', '/Astral/astral.jar', arglist)
+astral <- function(astral_args, java_args = NULL) {
+  files_to_send <- outsider::.filestosend_get(arglist = astral_args)
+  arglist <- c(java_args, '-jar', '/Astral/astral.jar', astral_args)
   otsdr <- outsider::.outsider_init(repo = 'dombennett/om..astral',
                                     cmd = 'java', arglist = arglist,
                                     files_to_send = files_to_send, wd = getwd())
