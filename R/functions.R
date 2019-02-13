@@ -2,10 +2,7 @@
 #' @title astral
 #' @description Run astral
 #' @param ... Arguments
-#' @examples
-#' library(outsider)
-#' astral <- module_import('astral', repo = 'dombennett/om..astral')
-#' astral('--help')
+#' @example /examples/astral.R
 #' @export
 astral <- function(...) {
   arglist <- outsider::.arglist_get(...)
