@@ -1,0 +1,13 @@
+Package: om..astral..dombennett
+Type: Package
+Version: 1.0.0
+Title: Outsider module for running astral
+GitHub: dombennett
+Docker: dombennett
+Description: Install and run astral from within R.
+Encoding: UTF-8
+Depends:
+    R (>= 3.5.2)
+Imports:
+    outsider
+RoxygenNote: 6.1.1
