@@ -2,8 +2,11 @@ Package: om..astral
 Type: Package
 Version: 1.0.0
 Title: Outsider module for running astral
-GitHub: dombennett
-Docker: dombennett
+Authors@R: person("Dom", "Bennett", role = c("aut", "cre"),
+    email = "dominic.john.bennett@gmail.com",
+    comment = c(ORCID = "0000-0003-2722-1359"))
+Maintainer: Dom Bennett <dominic.john.bennett@gmail.com>
+License: MIT + file LICENSE
 Description: Install and run astral from within R.
 Encoding: UTF-8
 Depends:
