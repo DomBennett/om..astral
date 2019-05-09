@@ -1,4 +1,4 @@
-Package: om..astral..dombennett
+Package: om..astral
 Type: Package
 Version: 1.0.0
 Title: Outsider module for running astral
@@ -9,5 +9,7 @@ Encoding: UTF-8
 Depends:
     R (>= 3.5.2)
 Imports:
+    outsider.base
+Suggests:
     outsider
 RoxygenNote: 6.1.1
