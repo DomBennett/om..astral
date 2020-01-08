@@ -1,0 +1,121 @@
+---
+output: github_document
+---
+<!--
+The README should be used to describe the program. It acts like the homepage of
+your module.
+
+Edit README.Rmd not README.md. The .Rmd file can be knitted to parse real-code
+examples and show their output in the .md file.
+
+To knit, use devtools::build_readme() or outsider.devtools::build()
+
+Edit the template to describe your program: how to install, import and run;
+run exemplary, small demonstrations; present key arguments; provide links and
+references to the program that the module wraps.
+
+Learn more about markdown and Rmarkdown:
+https://daringfireball.net/projects/markdown/syntax
+https://rmarkdown.rstudio.com/
+-->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# Run [`astral`](https://github.com/smirarab/ASTRAL) with `outsider` in R
+
+[![Build Status](https://travis-ci.org/dombennett/om..astral.svg?branch=master)](https://travis-ci.org/dombennett/om..astral)
+
+> Accurate Species TRee ALgorithm: estimating an unrooted species tree given a
+set of unrooted gene trees.
+
+<!-- Install information -->
+## Install and look up help
+
+```{r install-snippet, eval=TRUE, include=TRUE}
+library(outsider)
+module_install(repo = 'dombennett/om..astral')
+#module_help(repo = 'dombennett/om..astral')
+```
+
+<!-- Detailed examples -->
+## A detailed example
+
+```{r detailed-example, eval=TRUE, include=TRUE}
+# import
+library(outsider)
+astral <- module_import(fname = 'astral', repo = "dombennett/om..astral")
+
+# data
+# test dataset of song mammals
+url <- 'https://raw.githubusercontent.com/DomBennett/om..astral/master/test_data/song_mammals.424.gene.tre'
+input_file <- file.path(tempdir(), 'song_mammals.424.gene.tre')
+download.file(url = url, destfile = input_file)
+
+# run with test file and 1GB memmory
+output_file <- file.path(tempdir(), 'song_mammals.tre')
+astral(input_file = input_file, output_file = output_file,
+       java_args = '-Xmx1000M')
+
+# plot tree
+pkgs <- installed.packages()
+if (!'ape' %in% pkgs) {
+  install.packages('ape')
+}
+tree <- ape::read.tree(file = output_file)
+ape::plot.phylo(tree, type = 'fan', no.margin = TRUE)
+```
+
+<!-- Remove module after running above example -->
+```{r uninstall-snippet, eval=TRUE, include=FALSE}
+file.remove(input_file)
+file.remove(output_file)
+module_uninstall(repo = "dombennett/om..astral")
+```
+
+### Key arguments
+
+There are three arguments for calling `astral` through R:
+
+* `input_file`: List of Newick gene trees, equivalent to `-i` in command-line
+version
+* `output_file`: Newick species tree, equivalent to `-o` in command-line version
+* `log_file`: Output log.
+
+Additionally, there are separate Java arguments, e.g. `-Xmx` to specify maximum
+memory usage.
+
+## Links
+
+Find out more by visiting the [ASTRAL's homepage](https://github.com/smirarab/ASTRAL)
+
+## Please cite
+
+* Zhang, Chao, Maryam Rabiee, Erfan Sayyari, and Siavash Mirarab. 2018.
+"ASTRAL-III: Polynomial Time Species Tree Reconstruction from Partially Resolved
+Gene Trees." BMC Bioinformatics 19 (S6): 153. doi:10.1186/s12859-018-2129-y.
+* Rabiee, Maryam, Erfan Sayyari, and Siavash Mirarab. 2019. "Multi-Allele
+Species Reconstruction Using ASTRAL." Molecular Phylogenetics and Evolution
+130 (January). 286–96. doi:10.1016/j.ympev.2018.10.033.
+* Sayyari, Erfan, and Siavash Mirarab. 2016. "Fast Coalescent-Based Computation
+of Local Branch Support from Quartet Frequencies." Molecular Biology and
+Evolution 33 (7): 1654–68. doi:10.1093/molbev/msw079
+* Sayyari, Erfan, and Siavash Mirarab. 2018. "Testing for Polytomies in
+Phylogenetic Species Trees Using Quartet Frequencies." Genes 9 (3): 132.
+doi:10.3390/genes9030132.
+* Bennett et al. (2020). outsider: Install and run programs, outside of R,
+inside of R. *Journal of Open Source Software*, In review
+
+<!-- Footer -->
+---
+
+<img align="left" width="120" height="125" src="https://raw.githubusercontent.com/AntonelliLab/outsider/master/logo.png">
+
+**An `outsider` module**
+
+Learn more at [outsider website](https://antonellilab.github.io/outsider/). Want to build your own module? Check out [`outsider.devtools` website](https://antonellilab.github.io/outsider.devtools/).
