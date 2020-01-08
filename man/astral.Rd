@@ -4,26 +4,52 @@
 \alias{astral}
 \title{astral}
 \usage{
-astral(..., java_args = NULL)
+astral(
+  input_file,
+  output_file = "astral_species.tre",
+  log_file = NULL,
+  java_args = NULL
+)
 }
 \arguments{
-\item{...}{Arguments for ASTRAL}
+\item{input_file}{File path to list of Newick trees.}
 
-\item{java_args}{Arguments for java}
+\item{output_file}{File path to where resulting species tree should be saved.}
+
+\item{log_file}{File path to where log should be saved. If NULL, no log is
+saved.}
+
+\item{java_args}{Extra arguments for Java, character vector.}
 }
 \description{
-Run astral
+Run the Accurate Species TRee ALgorithm for inferring species
+trees from gene trees under the multi-species coalescent model.
 }
 \details{
+Online documentation for the original program can be found here
+\url{https://github.com/smirarab/ASTRAL}.
+
+\code{input_file} and \code{output_file} are equivalent to the arguments
+'-i' and '-o', respectively.
+
+See online for details on input_file formatting.
+
 Change memory settings with \code{-Xmx#M} in \code{java_args}.
 }
 \examples{
+# import
 library(outsider)
 astral <- module_import('astral', repo = 'dombennett/om..astral')
-astral('--help')
-# # Elaborate exmaple (NOT RUN)
-# # download example file
-# download.file(url = 'https://raw.githubusercontent.com/DomBennett/om..astral/master/test_data/song_mammals.424.gene.tre')
-# # run with test file and 1GB memmory
-# astral('-i', 'song_mammals.424.gene.tre', '-o', 'song_mammals.tre', java_args = '-Xmx1000M')
+
+# data
+# test dataset of song mammals
+url <- 'https://raw.githubusercontent.com/DomBennett/om..astral/master/test_data/song_mammals.424.gene.tre'
+input_file <- file.path(tempdir(), 'song_mammals.424.gene.tre')
+download.file(url = url, destfile = input_file)
+
+# run with test file and 1GB memmory
+output_file <- file.path(tempdir(), 'song_mammals.tre')
+log_file <- file.path(tempdir(), 'log_song_mammals.txt')
+astral(input_file = input_file, output_file = output_file, log_file = log_file,
+       java_args = '-Xmx1000M')
 }
